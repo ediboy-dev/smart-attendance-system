@@ -1,0 +1,14 @@
+{
+  "name": "attendance-system",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Automated Smart Class Attendance Management System (backend + frontend, single web service)",
+  "engines": {
+    "node": ">=18"
+  },
+  "scripts": {
+    "build": "npm install --prefix backend --omit=dev && npm install --prefix frontend --include=dev && npm run build --prefix frontend",
+    "start": "node backend/server.js",
+    "seed": "node backend/seed/sampleData.js"
+  }
+}
