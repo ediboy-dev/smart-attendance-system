@@ -26,12 +26,13 @@ This is the backend for your final year project, matching Chapter Four and Appen
    - `MONGO_URI` — your MongoDB Atlas connection string (or `mongodb://localhost:27017/attendance_system` if running MongoDB locally)
    - `JWT_SECRET` — any long, random string (e.g., mash your keyboard for 40+ characters)
    - `QR_SECRET` — a different long, random string
+   - `DEMO_PASSWORD` — the password the seed script gives every demo account (at least 8 characters)
 
 5. Seed the database with sample test data:
    ```
    npm run seed
    ```
-   This creates 1 admin, 1 lecturer, and 8 students, plus 3 sample courses. Login emails/passwords are printed in the terminal after seeding.
+   This creates 1 admin, 1 lecturer, and 8 students, plus 3 sample courses. Login emails are printed in the terminal after seeding; the password is your `DEMO_PASSWORD`.
 
 6. Start the server:
    ```
@@ -45,7 +46,7 @@ This is the backend for your final year project, matching Chapter Four and Appen
 
 Use Postman (https://www.postman.com/downloads) or a similar tool to test endpoints before building the frontend. Start with:
 
-- `POST http://localhost:5000/api/auth/login` with body `{ "email": "lecturer@example.com", "password": "ChangeMe123!" }` — this should return a token.
+- `POST http://localhost:5000/api/auth/login` with body `{ "email": "lecturer@example.com", "password": "<your DEMO_PASSWORD>" }` — this should return a token.
 - Copy that token, then try `GET http://localhost:5000/api/courses` with header `Authorization: Bearer <token>`.
 
 See Chapter Four, Section 4.1.7 (API Endpoint Documentation) in your project report for the full list of available endpoints.
