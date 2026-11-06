@@ -10,6 +10,13 @@ const Session = require('../models/Session');
 const Attendance = require('../models/Attendance');
 const AnalyticsSummary = require('../models/AnalyticsSummary');
 
+// The demo accounts' password is read from the .env file (DEMO_PASSWORD), so it is never stored in the code.
+const DEMO_PASSWORD = process.env.DEMO_PASSWORD;
+if (!DEMO_PASSWORD || DEMO_PASSWORD.length < 8) {
+  console.error('Set DEMO_PASSWORD (at least 8 characters) in your .env file before seeding.');
+  process.exit(1);
+}
+
 async function seed() {
   await mongoose.connect(process.env.MONGO_URI);
   console.log('Connected. Seeding data...');
@@ -26,26 +33,27 @@ async function seed() {
   ]);
 
   const admin = await User.create({
-    name: 'System Administrator', email: 'admin@example.com', password: 'ChangeMe123!', role: 'admin',
+    name: 'System Administrator', email: 'admin@example.com', password: DEMO_PASSWORD, role: 'admin',
   });
 
   const lecturer = await User.create({
-    name: 'Dr. Jane Lecturer', email: 'lecturer@example.com', password: 'ChangeMe123!', role: 'lecturer',
+    name: 'Dr. Jane Lecturer', email: 'lecturer@example.com', password: DEMO_PASSWORD, role: 'lecturer',
   });
 
   const students = [];
   for (let i = 1; i <= 8; i++) {
     students.push({
-      name: `Student ${i}`, email: `student${i}@example.com`, password: 'ChangeMe123!',
+      name: `Student ${i}`, email: `student${i}@example.com`, password: DEMO_PASSWORD,
       role: 'student', department: 'CS', level: 300, matricNo: `CSC/300/00${i}`,
     });
   }
   await User.create(students);
 
   console.log('Seed complete.');
-  console.log(`Admin login: admin@example.com / ChangeMe123!`);
-  console.log(`Lecturer login: lecturer@example.com / ChangeMe123!`);
-  console.log(`Student logins: student1@example.com ... student8@example.com / ChangeMe123!`);
+  console.log('Admin login: admin@example.com');
+  console.log('Lecturer login: lecturer@example.com');
+  console.log('Student logins: student1@example.com ... student8@example.com');
+  console.log('Password for all demo accounts: the DEMO_PASSWORD value in your .env file');
 
   await mongoose.disconnect();
 }
